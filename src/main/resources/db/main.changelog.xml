@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="init-db" author="vano">
+        <createTable tableName="author">
+            <column name="id" type="bigint"></column>
+            <column name="name" type="varchar2(512)"/>
+        </createTable>
+        <createTable tableName="post">
+            <column name="id" type="bigint"></column>
+            <column name="text" type="varchar2(512)"/>
+            <column name="author_id" type = "bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="primary-kyes" author="vano">
+        <addPrimaryKey tableName="author" columnNames="id"/>
+        <addPrimaryKey tableName="post" columnNames="id"/>
+        <addForeignKeyConstraint baseTableName="post" baseColumnNames="author_id"
+                                 constraintName="fk_post_author_id" referencedTableName="author"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="add-sequences" author="vano">
+        <createSequence sequenceName="author_seq" minValue="1000"/>
+        <createSequence sequenceName="post_seq" minValue="1000"/>
+    </changeSet>
+</databaseChangeLog>
